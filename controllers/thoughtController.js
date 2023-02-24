@@ -25,7 +25,7 @@ const thoughtController = {
         return User.findOneAndUpdate( { _id: req.bodr.userId }, { $push: { thoght: _id }}, { new: true }, );
       })
       .then((dbThoughtData) => {
-       if!dbThoughtData {
+       if (!dbThoughtData) {
           res.status(404).json({ message: 'No Thought with this ID' })
           return;
        }
