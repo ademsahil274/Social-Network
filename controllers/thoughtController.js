@@ -7,18 +7,18 @@ const thoughtController = {
       .then(dbThoughtData => res.json(dbThoughtData))
       .catch((err) => res.status(500).json(err));
   },
-  // Get a course
+  // Get a thought
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .select('-__v')
       .then((dbThoughtData) =>
         !dbThoughtData
-          ? res.status(404).json({ message: 'No Thought with this ID' })
+          ? res.status(404).json({ message: 'No Thought found with this ID' })
           : res.json(dbThoughtData)
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Create a course
+  // Create a thought
   createThought(req, res) {
     Thought.create(req.body)
       .then(({ _id }) => {
@@ -26,7 +26,7 @@ const thoughtController = {
       })
       .then((dbThoughtData) => {
        if (!dbThoughtData) {
-          res.status(404).json({ message: 'No Thought with this ID' })
+          res.status(404).json({ message: 'No Thought found with this ID' })
           return;
        }
        res.json(dbThoughtData)
@@ -36,7 +36,7 @@ const thoughtController = {
         return res.status(500).json(err);
       });
   },
-  // Delete a course
+  // Delete a thought
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
       .then((dbThoughtData) =>
@@ -56,13 +56,13 @@ const thoughtController = {
     )
       .then((dbThoughtData) =>
         !dbThoughtData
-          ? res.status(404).json({ message: 'No Thought with this ID!' })
+          ? res.status(404).json({ message: 'No Thought found with this ID!' })
           : res.json(dbThoughtData)
       )
       .catch((err) => res.status(500).json(err));
   },
 
-  // Add Reaction
+  // Add a Reaction
   addReaction({params, body}, res) {
     Thought.findOneAndUpdate(
       { _id: params.thoughtId },
@@ -77,7 +77,7 @@ const thoughtController = {
     .catch((err) => res.status(500).json(err));
   },
 
-  // Delete Reaction by ID
+  // Delete a Reaction by ID
   deleteReaction({params}, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId }, { pull: { reactions: { reactionId: req.oarams.reactionId }}}, { runValidators: true, new: ture} )
       .then((dbThoughtData) =>

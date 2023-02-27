@@ -10,7 +10,7 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Get a single student
+  // Get a single user
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select('-__v')
@@ -26,7 +26,7 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // create a new student
+  // Create a new user
   createUser(req, res) {
     User.create(req.body)
       .then((user) => res.json(user))
@@ -49,18 +49,18 @@ module.exports = {
     Student.findOneAndRemove({ _id: req.params.userId })
       .then((User) =>
         !user
-          ? res.status(404).json({ message: 'No such student exists' })
+          ? res.status(404).json({ message: 'No such user exists' })
           : Thought.removeMany(
               { _id: { $in: user.thoughts }},
             )
       )
-      .then(() => res.json({ messega: 'User and Thought deleted!'}))
+      .then(() => res.json({ messega: 'User and the Thought deleted!'}))
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
       });
   },
-      //create a friend
+      // Create a friend
   createFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId }, { $addToSet: { friends: req.params.friendId } }, { runValidators: true, new: true }
@@ -72,7 +72,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  //delete a friend
+  // Delete a friend
   deleteFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId }, { $pull: { friends: req.params.friendId } }, { new: true }
