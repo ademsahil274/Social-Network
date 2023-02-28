@@ -79,12 +79,17 @@ const thoughtController = {
 
   // Delete a Reaction by ID
   deleteReaction({params}, res) {
-    Thought.findOneAndDelete({ _id: req.params.thoughtId }, { pull: { reactions: { reactionId: req.oarams.reactionId }}}, { runValidators: true, new: ture} )
-      .then((dbThoughtData) =>
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId }, 
+      { $pull: { reactions: { reactionId: params.reactionId }}}, 
+      { runValidators: true, new: true },
+      )
+      .then((dbThoughtData) => {
+        console.log(dbThoughtData)
         !dbThoughtData
           ? res.status(404).json({ message: 'No Thought found with this ID' })
-          : User.deleteMany({ _id: { $in: dbThoughtData.users } })
-    )
+          : res.json({ message: 'Reaction deleted!'})
+      })
   }
 };
 
