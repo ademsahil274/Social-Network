@@ -32,3 +32,6 @@ Create Friend
 ![Alt text](Assets/Insomniqa%20Friends.PNG)
 Create a Reaction
 ![Alt text](Assets/Insomnia%20Reactions.PNG)
+
+## Walkthrough Video
+[Please click here!](https://drive.google.com/file/d/1Dr31g6hJUK2Xoq7EiD8QMUwmQ0iUFRw4/view)
